@@ -1,0 +1,11 @@
+<nav ng-controller="TableContentsCtrl">
+  <div class="input-group-sm" id="contentSearch">
+    <input type="text" class="form-control" placeholder="Search" ng-model="search.displayName">
+  </div>
+  <ul class="toc_section">
+    <li ng-repeat="item in tableContents | filter:search.displayName" >
+      <a class="active" ui-sref="page({id:item.urlName, display: item.displayName, url: item.url})">
+        <span class="glyphicon glyphicon-book"></span><span class="content-name" ng-bind-html="item.displayName | highlight:search.displayName"></span>
+      </a></li>
+  </ul>
+</nav>
