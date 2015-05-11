@@ -8,4 +8,4 @@ You need to install [Atom/Electron](https://github.com/atom/electron) first, The
 Add the repo readme documentation on the top.
 
 ## ScreenShot
-![img](./screenshot.png)
+![img](./doc/screenshot.png)
