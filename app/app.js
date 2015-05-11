@@ -44,7 +44,8 @@ app.config(['$stateProvider', "$urlRouterProvider", function ($stateProvider, $u
   $stateProvider.state("page", {
     url: "/readme/:id/:display?url",
     templateUrl: function ($stateParams) {
-      return "readme/" + $stateParams.id + ".html";
+      var appDataPath = require("remote").require("app").getPath("appData");
+      return appDataPath + "/" + $stateParams.id + ".html";
     }
   }).state("notfound", {
     url: "/404",

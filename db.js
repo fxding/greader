@@ -5,6 +5,8 @@ function DB(config) {
   this.github = new GithubApi({version: "3.0.0"});
   this.db = null;
   this.config = config;
+  this.appDataPath = require("remote").require("app").getPath("appData");
+  this.dbName = "readme.sqlite";
 }
 
 DB.prototype.init = function () {
@@ -15,11 +17,10 @@ DB.prototype.init = function () {
 
   var fs = require("fs");
   var sqlite = require("sql.js");
-
   function createOrReadDatabase(path) {
     var yes = fs.existsSync(path);
     if(yes) {
-      var data = fs.readFileSync('readme.sqlite');
+      var data = fs.readFileSync(path);
       if (!data) {
         return ;
       }
@@ -38,7 +39,7 @@ DB.prototype.init = function () {
       }
     }
   }
-  this.db = createOrReadDatabase("readme.sqlite");
+  this.db = createOrReadDatabase(this.appDataPath + '/' + this.dbName);
   return this.db;
 };
 
@@ -57,7 +58,7 @@ DB.prototype.add = function (repo) {
         } else {
           var name = repo.user + "_" + repo.name;
           name = name.replace(/\.|\//g, '_');
-          fs.writeFile("readme/" + name + ".html", page, function (err) {
+          fs.writeFile(self.appDataPath + "/" + name + ".html", page, function (err) {
             if (err) {
               reject(err);
             } else {
@@ -77,7 +78,7 @@ DB.prototype.add = function (repo) {
           self.db.run("INSERT INTO test VALUES (?,?,?,?,?)", [data.full_name, data.html_url, data.language, data.description, data.owner.html_url]);
           var d = self.db.export();
           var buffer = new Buffer(d);
-          fs.writeFile("readme.sqlite", buffer, function (err) {
+          fs.writeFile(self.appDataPath + '/' + self.dbName, buffer, function (err) {
             if (err) {
               return reject(err);
             }
