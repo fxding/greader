@@ -2,6 +2,11 @@
   "name": "greader",
   "version": "0.0.1",
   "main": "main.js",
+  "homepage": "https://github.com/Nekle/greader",
+  "description": "Github Readme Reader is a collector of readme documentations, you can use it to collect the readme documentations you want to read it. All the Readme file will be downloaded on your local, you can read it at any where even you are offline.",
+  "scripts": {
+    "start": "electron ."
+  },
   "dependencies": {
     "angular": "^1.3.15",
     "angular-ui-router": "^0.2.14",
@@ -11,8 +16,5 @@
     "jquery": "^2.1.4",
     "sql.js": "^0.2.21"
   },
-  "description": "Github Readme Reader is a collector of readme documentations, you can use it to collect the readme documentations you want to read it. All the Readme file will be downloaded on your local, you can read it at any where even you are offline.",
-  "devDependencies": {},
-  "license": "MIT",
-  "homepage": "https://github.com/Nekle/greader"
+  "license": "MIT"
 }
