@@ -71,7 +71,7 @@ app.provider("readmeList", [function () {
 
     return list;
   }
-  var DB = require("../db.js");
+  var DB = require("./db.js");
   var db = new DB();
   var connect = null;
 

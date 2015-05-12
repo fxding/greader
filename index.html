@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="en">
+  <meta charset="utf-8"/>
   <title> Github Readme Reader</title>
   <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="app/css/style.css"/>
   <link rel="stylesheet" href="node_modules/github-markdown-css/github-markdown.css"/>
+  <link rel="stylesheet" href="app/css/style.css"/>
 </head>
 <body ng-app="GithubReadmeReader">
 <div ng-include=" 'app/partials/top-bar.html' " ng-controller="NavCtrl"></div>
-<div ng-include=" 'app/partials/table.html' " id="sidebar"></div>
+<div ng-include=" 'app/partials/sidebar.html' " id="sidebar"></div>
 <div id="content">
   <div ui-view></div>
 </div>
 <script>
-  require(__dirname + "/app.js");
+  require(__dirname + "/index.js");
 
   var remote = require('remote');
   var Menu = remote.require('menu');
@@ -22,6 +23,7 @@
   menu.append(new MenuItem({ label: 'Copy', click: function () { remote.getCurrentWindow().webContents.copy(); }}));
   menu.append(new MenuItem({ label: 'Reload', click: function() { remote.getCurrentWindow().webContents.reload(); } }));
 
+  // only add context menu to content
   var content = document.getElementById("content");
   content.addEventListener('contextmenu', function (e) {
     e.preventDefault();

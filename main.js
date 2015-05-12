@@ -12,7 +12,7 @@ app.on("window-all-closed", function () {
 });
 
 function createWindow() {
-  mainWindow = new BrowserWindow({width: 800, height: 600, "min-width": 800, "min-height": 300});
+  mainWindow = new BrowserWindow({title:"GReader", width: 800, height: 600, "min-width": 800, "min-height": 300});
   mainWindow.loadUrl("file://" + __dirname + "/index.html");
 
   mainWindow.on("closed", function () {
