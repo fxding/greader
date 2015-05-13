@@ -3,13 +3,13 @@
 <head lang="en">
   <meta charset="utf-8"/>
   <title> Github Readme Reader</title>
-  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="node_modules/github-markdown-css/github-markdown.css"/>
-  <link rel="stylesheet" href="app/css/style.css"/>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../node_modules/github-markdown-css/github-markdown.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body ng-app="GithubReadmeReader">
-<div ng-include=" 'app/partials/top-bar.html' " ng-controller="NavCtrl"></div>
-<div ng-include=" 'app/partials/sidebar.html' " id="sidebar"></div>
+<div ng-include=" 'partials/top-bar.html' " ng-controller="NavCtrl"></div>
+<div ng-include=" 'partials/sidebar.html' " id="sidebar"></div>
 <div id="content">
   <div ui-view></div>
 </div>

@@ -4,5 +4,5 @@
   require("angular");
   require("angular-ui-router");
 
-  require("./app/app.js");
+  require("./app.js");
 })();
