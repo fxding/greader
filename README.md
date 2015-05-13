@@ -3,7 +3,13 @@ All the Readme file will be downloaded on your local, you can read it at any whe
 
 #Usage
 
-You need to install [Atom/Electron](https://github.com/atom/electron) first, Then run it as Electron app.
+You need to install [Atom/Electron](https://github.com/atom/electron) first, then run it as Electron app.
+
+```
+// in app directory
+npm install   // install dependencies
+npm start     // start app
+```
 
 Add the repo readme documentation on the top.
 
