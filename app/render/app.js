@@ -134,3 +134,17 @@ app.filter('highlight', ["$sce", function($sce) {
 app.filter("decodeURL", ["$window", function ($window) {
   return $window.decodeURIComponent;
 }]);
+
+app.run(["$rootScope", function ($rootScope) {
+  $rootScope.$on("$viewContentLoaded", function () {
+    // fix anchors in readme file
+    $('a[href^=#]').each(function () {
+      var $this = $(this);
+      $this.on("click", function () {
+        var name = $this.attr("href").replace("#", "");
+        var target = $("a[name=user-content-" + name +"]")[0];
+        $('html, body').animate({ scrollTop: $(target).offset().top - 50},'slow');
+      });
+    });
+  });
+}]);
