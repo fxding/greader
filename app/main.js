@@ -1,5 +1,6 @@
 var app = require("app");
 var BrowserWindow = require("browser-window");
+var windowStateKeeper = require('./browser/window_state');
 
 require("crash-reporter").start();
 
@@ -12,12 +13,38 @@ app.on("window-all-closed", function () {
 });
 
 function createWindow() {
-  mainWindow = new BrowserWindow({title:"GReader", width: 800, height: 600, "min-width": 800, "min-height": 300});
+  // Preserver of the window size and position between app launches.
+  var mainWindowState = windowStateKeeper('main', {
+    width: 1000,
+    height: 600
+  });
+
+  mainWindow = new BrowserWindow({
+    title: "GReader",
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    "min-width": 800,
+    "min-height": 300
+  });
+
+  if (mainWindowState.isMaximized) {
+    mainWindow.maximize();
+  }
+
   mainWindow.loadUrl("file://" + __dirname + "/render/index.html");
 
+  // save state before close
+  mainWindow.on('close', function () {
+    mainWindowState.saveState(mainWindow);
+  });
+
+  // defer mainWindow
   mainWindow.on("closed", function () {
     mainWindow = null;
   });
+
   // open url in default browser
   mainWindow.webContents.on("will-navigate", function (event, url) {
     if(!url.startsWith("file://")) {
