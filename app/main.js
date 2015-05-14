@@ -50,8 +50,6 @@ function createWindow() {
     if(!url.startsWith("file://")) {
       event.preventDefault();
       require("shell").openExternal(url);
-    } else {
-      console.log("file");
     }
   });
 
