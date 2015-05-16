@@ -20,5 +20,7 @@ Add the repo readme documentation on the top.
 ## TODO
 - Add gulp tasks
 - Add state indicator
-- Add content navigator 
-
+- ~~Add content navigator~~
+- Delete readme file
+- Welcome page
+- Content search
