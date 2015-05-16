@@ -193,7 +193,7 @@ app.run(["$rootScope", function ($rootScope) {
       var $this = $(this);
       var name = $this.attr("href").replace("#", "");
       if (name.indexOf('/') > -1) return; // not anchors
-      var target = $("a[name=user-content-" + name +"]")[0];
+      var target = $("a[id=user-content-" + name +"]")[0] || $("a[name=user-content-" + name +"]")[0];
       if (target) { // only add event when it's a anchor and has target
         $this.on("click", function () {
           $('html, body').animate({ scrollTop: $(target).offset().top - 50},'fast');
