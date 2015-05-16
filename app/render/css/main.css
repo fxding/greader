@@ -1,0 +1,137 @@
+util.print: Use console.log instead
+body {
+  padding-top: 50px;
+}
+nav.top-bar {
+  background-image: -webkit-linear-gradient(top, #fafafa, #f0f0f0);
+  background-image: -o-linear-gradient(top, #fafafa, #f0f0f0);
+  background-image: linear-gradient(to bottom, #fafafa, #f0f0f0);
+  background-repeat: repeat-x;
+  border-bottom: 1px solid #bbbbbb;
+}
+@-webkit-keyframes download-progress-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@keyframes download-progress-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+.download-progress {
+  width: 100%;
+  -webkit-transition: width 0.6s ease;
+  -o-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+}
+.download-progress.active {
+  -webkit-animation: dowload-progress-stripes 2s linear infinite;
+  -o-animation: dowload-progress-stripes 2s linear infinite;
+  animation: dowload-progress-stripes 2s linear infinite;
+  background-image: -webkit-linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%, transparent 25%, transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%, transparent 25%, transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%, transparent 75%, transparent);
+  -webkit-background-size: 40px 40px;
+  background-size: 40px 40px;
+}
+div#sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  color: #000000;
+  width: 250px;
+  font-family: Lucida Grande;
+  white-space: nowrap;
+  background: #f5f5f5;
+  border-right: 1px solid #bbbbbb;
+}
+div#sidebar .readme-list-search-wrapper {
+  padding: 10px 5px 10px 5px;
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e3e3e3);
+  background-image: -o-linear-gradient(top, #f7f7f7, #e3e3e3);
+  background-image: linear-gradient(to bottom, #f7f7f7, #e3e3e3);
+  background-repeat: repeat-x;
+  border-bottom: 1px solid #bbbbbb;
+  border-top: 1px solid #bbbbbb;
+}
+div#sidebar .readme-nav {
+  font-size: 13.5px;
+  padding-top: 50px;
+}
+div#sidebar .readme-nav .readme-nav-list {
+  padding: 5px 0 5px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  list-style-type: none;
+}
+div#sidebar .readme-nav .readme-nav-list .readme-nav-list-item:hover {
+  background-color: #cecece;
+}
+div#sidebar .readme-nav .readme-nav-list .readme-nav-list-item.active {
+  background-color: #afafaf;
+}
+div#sidebar .readme-nav .readme-nav-list .readme-nav-list-item a {
+  display: block;
+  color: black;
+  padding: 1px 0 1px 10px;
+  text-decoration: none;
+}
+div#sidebar .readme-nav .readme-nav-list .readme-nav-list-item .readme-item-name {
+  padding-left: 4px;
+}
+div#sidebar .handbar {
+  padding: 0 8px;
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #cccccc);
+  background-image: -o-linear-gradient(top, #f7f7f7, #cccccc);
+  background-image: linear-gradient(to bottom, #f7f7f7, #cccccc);
+  background-repeat: repeat-x;
+  border-top: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbbbbb;
+}
+div#sidebar .content-nav {
+  position: fixed;
+  bottom: 0;
+  width: 250px;
+  font-size: 13px;
+  background-color: #f5f5f5;
+  border-right: 1px solid #bbbbbb;
+}
+div#sidebar .content-nav .content-nav-list {
+  height: 300px;
+  margin: 0 0 16px 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  list-style: none;
+}
+div#sidebar .content-nav .content-nav-list .content-nav-list-item {
+  padding: 3px 0 3px 10px;
+}
+div#sidebar .content-nav .content-nav-list .content-nav-list-item:nth-child(2n) {
+  background-color: #FFFFFF;
+}
+div#sidebar .content-nav .content-nav-list .content-nav-list-item:hover {
+  background-color: #cecece;
+}
+div#sidebar .content-nav .content-nav-list .content-nav-list-item.active {
+  background-color: #AC9DF2;
+}
+div#sidebar .content-nav .content-nav-list .content-nav-list-item a {
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+/* Content */
+div#content {
+  min-width: 500px;
+  margin: 0 20px 20px 270px;
+}
+.highlighted {
+  background: #ffff00;
+}

@@ -1,0 +1,145 @@
+@sidebar-bg-color: #f5f5f5;
+@sidebar-width: 250px;
+@page-top-padding: 50px;
+@border-color: #bbbbbb;
+@highlight-color: yellow;
+@sidebar-font-color: black;
+
+.transition(@transition) {
+  -webkit-transition: @transition;
+  -o-transition: @transition;
+  transition: @transition;
+}
+.animation(@animation) {
+  -webkit-animation: @animation;
+  -o-animation: @animation;
+  animation: @animation;
+}
+.vertical-gradient(@start-color: #F7F7F7; @end-color: #E3E3E3) {
+  background-image: -webkit-linear-gradient(top, @start-color, @end-color);
+  background-image: -o-linear-gradient(top, @start-color, @end-color);
+  background-image: linear-gradient(to bottom, @start-color, @end-color);
+  background-repeat: repeat-x;
+}
+body { padding-top: @page-top-padding; }
+nav.top-bar {
+  .vertical-gradient(#FAFAFA, #F0F0F0);
+  border-bottom: 1px solid @border-color;
+}
+@-webkit-keyframes download-progress-stripes {
+  from { background-position: 40px 0; }
+  to { background-position: 0 0; }
+}
+@keyframes download-progress-stripes {
+  from { background-position: 40px 0; }
+  to { background-position: 0 0; }
+}
+.download-progress {
+  width: 100%;
+  .transition(width .6s ease);
+  &.active{
+    .animation(dowload-progress-stripes 2s linear infinite);
+    background-image: -webkit-linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%,transparent 25%,transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%,transparent 75%,transparent);
+    background-image: linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%,transparent 25%,transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%,transparent 75%,transparent);
+    -webkit-background-size: 40px 40px;
+    background-size: 40px 40px;
+  }
+}
+div#sidebar{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  color: @sidebar-font-color;
+  width: @sidebar-width;
+  font-family: Lucida Grande;
+  white-space: nowrap;
+  background: @sidebar-bg-color;
+  border-right: 1px solid @border-color;
+
+  // search input
+  .readme-list-search-wrapper {
+    padding: 10px 5px 10px 5px;
+    .vertical-gradient(#F7F7F7, #E3E3E3);
+    border-bottom: 1px solid @border-color;
+    border-top: 1px solid @border-color;
+  }
+
+  // readme list
+  .readme-nav {
+    font-size: 13.5px;
+    padding-top: @page-top-padding;
+    .readme-nav-list {
+      padding: 5px 0 5px 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      list-style-type: none;
+      .readme-nav-list-item {
+        &:hover {
+          background-color: #cecece;
+        }
+        &.active {
+          background-color: #afafaf;
+        }
+        a {
+          display: block;
+          color: black;
+          padding: 1px 0 1px 10px;
+          text-decoration: none;
+        }
+        .readme-item-name {
+          padding-left: 4px;
+        }
+      }
+    }
+  }
+  // hand bar
+  .handbar {
+    padding: 0 8px;
+    .vertical-gradient(#F7F7F7, #CCCCCC);
+    border-top: 1px solid @border-color;
+    border-bottom: 1px solid @border-color;
+  }
+  // content navigator
+  .content-nav {
+    position: fixed;
+    bottom: 0;
+    width: @sidebar-width;
+    font-size: 13px;
+    background-color: @sidebar-bg-color;
+    border-right: 1px solid @border-color;
+    .content-nav-list {
+      height: 300px;
+      margin: 0 0 16px 0;
+      padding: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      list-style: none;
+      .content-nav-list-item {
+        padding: 3px 0 3px 10px;
+        &:nth-child(2n){
+          background-color: #FFFFFF;
+        }
+        &:hover{
+          background-color: #cecece;
+        }
+        &.active{
+          background-color: #AC9DF2;
+        }
+        a {
+          display: block;
+          text-decoration: none;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+/* Content */
+div#content {
+  min-width: 500px;
+  margin: 0 20px 20px 270px;
+}
+
+.highlighted { background: yellow }
+

@@ -10,7 +10,7 @@
       <ul class="readme-nav-list">
         <li class="readme-nav-list-item" ng-repeat="item in readmeNavList | filter:search.displayName" ng-click="openReadme($event)">
           <a class="" ui-sref="page({id:item.urlName, display: item.displayName, url: item.url})">
-            <span class="glyphicon glyphicon-book"></span><span class="content-name" ng-bind-html="item.displayName | highlight:search.displayName"></span>
+            <span class="glyphicon glyphicon-book"></span><span class="readme-item-name" ng-bind-html="item.displayName | highlight:search.displayName"></span>
           </a></li>
       </ul>
     </div>
