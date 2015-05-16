@@ -1,7 +1,8 @@
 var app = angular.module("GithubReadmeReader", ["ui.router"]);
 
-app.controller("TableContentsCtrl", ["$scope", "readmeList", function ($scope, readmeList) {
-  $scope.tableContents = [];
+app.controller("TableContentsNavCtrl", ["$scope", "$rootScope", "readmeList", function ($scope, $rootScope, readmeList) {
+  $scope.readmeNavList = [];
+  $scope.contentNavList = [];
 
   function updateReadmeList() {
     $scope.readmeList = readmeList.list();
@@ -10,12 +11,34 @@ app.controller("TableContentsCtrl", ["$scope", "readmeList", function ($scope, r
       var name = readme["full_name"].replace(/\.|\//g, '_');
       list.push({urlName: name, displayName: readme["full_name"], url: readme["html_url"]});
     });
-    $scope.tableContents = list;
+    $scope.readmeNavList = list;
   }
   $scope.$on("readmeListUpdateEvent", function () {
     updateReadmeList();
     $scope.$digest(); // update UI . why?
   });
+
+  $rootScope.$on("$viewContentLoaded", function () {
+    var anchors = $("a[id^=user-content-].anchor");
+    var list = [];
+    anchors.each(function () {
+      var $this = $(this);
+      list.push({ name: $this.parent().text().trim(), anchor: $this.attr("id")});
+    });
+    $scope.contentNavList = list;
+  });
+
+  $scope.openReadme = function (e) {
+    $(e.target).parents("li").siblings().removeClass("active");
+    $(e.target).parents("li").addClass("active");
+  };
+
+  $scope.gotoContent = function (anchor, e) {
+    var target = $("a[id="+ anchor +"]")[0];
+    $('html, body').animate({ scrollTop: $(target).offset().top - 50},'fast');
+    $(e.target).parents("li").siblings().removeClass("active");
+    $(e.target).parents("li").addClass("active");
+  };
 
   updateReadmeList();
 }]);
@@ -29,7 +52,6 @@ app.controller("NavCtrl", ["$scope", "$rootScope", "$sce", "readmeList", functio
     if (!user || !name) {
       return console.log("Invalid url");
     }
-    console.log(user + name);
     readmeList.add({user: user, name: name}).catch(function (err) {
       console.error(JSON.stringify(err));
     });
@@ -135,16 +157,41 @@ app.filter("decodeURL", ["$window", function ($window) {
   return $window.decodeURIComponent;
 }]);
 
+
+app.filter("stringTrunc", ["$filter", function ($filter) {
+    return function (str, n, r, w) {
+      r = r || "...";
+      n = n || str.length;
+      var count = 0, returnStr = "";
+      if (!w) {
+        returnStr = $filter('limitTo')(str, n);
+        if (returnStr.length < str) return returnStr + r;
+      }
+      var words = str.split(" ");
+      angular.forEach(words, function (word) {
+        if (count + word.length > n) return returnStr + r;
+        returnStr += word + " ";
+        count = returnStr.length;
+      });
+      if (returnStr.length < str.length ) returnStr += r;
+
+      return returnStr;
+    };
+}]);
+
 app.run(["$rootScope", function ($rootScope) {
   $rootScope.$on("$viewContentLoaded", function () {
     // fix anchors in readme file
     $('a[href^=#]').each(function () {
       var $this = $(this);
-      $this.on("click", function () {
-        var name = $this.attr("href").replace("#", "");
-        var target = $("a[name=user-content-" + name +"]")[0];
-        $('html, body').animate({ scrollTop: $(target).offset().top - 50},'slow');
-      });
+      var name = $this.attr("href").replace("#", "");
+      if (name.indexOf('/') > -1) return; // not anchors
+      var target = $("a[name=user-content-" + name +"]")[0];
+      if (target) { // only add event when it's a anchor and has target
+        $this.on("click", function () {
+          $('html, body').animate({ scrollTop: $(target).offset().top - 50},'fast');
+        });
+      }
     });
   });
 }]);

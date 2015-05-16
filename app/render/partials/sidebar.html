@@ -1,11 +1,94 @@
-<nav ng-controller="TableContentsCtrl">
-  <div class="input-group-sm" id="contentSearch">
-    <input type="text" class="form-control" placeholder="Search" ng-model="search.displayName">
+<nav ng-controller="TableContentsNavCtrl">
+  <div id="sidebar">
+    <div class="readme-nav">
+      <div class="readme-list-search-wrapper">
+        <div class="input-group-sm">
+          <input type="text" class="form-control" placeholder="Search" ng-model="search.displayName">
+        </div>
+      </div>
+
+      <ul class="readme-nav-list">
+        <li class="readme-nav-list-item" ng-repeat="item in readmeNavList | filter:search.displayName" ng-click="openReadme($event)">
+          <a class="" ui-sref="page({id:item.urlName, display: item.displayName, url: item.url})">
+            <span class="glyphicon glyphicon-book"></span><span class="content-name" ng-bind-html="item.displayName | highlight:search.displayName"></span>
+          </a></li>
+      </ul>
+    </div>
+    <div class="content-nav">
+      <div class="handbar">Content Navigator<span class="glyphicon glyphicon-resize-vertical pull-right"></span></div>
+      <ul class="content-nav-list">
+        <li class="content-nav-list-item" ng-repeat="item in contentNavList" ng-click="gotoContent(item.anchor, $event)">
+          <a ng-href="#{{item.anchor}}">{{item.name | stringTrunc: 30 : "..." : true}}</a>
+        </li>
+      </ul>
+    </div>
   </div>
-  <ul class="toc_section">
-    <li ng-repeat="item in tableContents | filter:search.displayName" >
-      <a class="active" ui-sref="page({id:item.urlName, display: item.displayName, url: item.url})">
-        <span class="glyphicon glyphicon-book"></span><span class="content-name" ng-bind-html="item.displayName | highlight:search.displayName"></span>
-      </a></li>
-  </ul>
 </nav>
+
+<script>
+  $(function () {
+    var sidebar = $($("#sidebar")[0]);
+    var readmeNav = $($(".readme-nav")[0]);
+    var readmeNavList = $($(".readme-nav-list")[0]);
+    var handbar = $($(".handbar")[0]);
+    var contentNav = $($(".content-nav")[0]);
+    var contentNavList = $($(".content-nav-list")[0]);
+    var search = $($(".readme-list-search-wrapper")[0]);
+    var minReadmeNavHeight = 200;
+    var minContentNavHeight = 250;
+
+    function resize() {
+      readmeNav.css({height: sidebar.height() - contentNav.outerHeight()});
+      readmeNavList.css({height: readmeNav.height() - search.outerHeight()});
+    }
+
+    function canMoveToTop() {
+      return readmeNav.outerHeight(true) >= minReadmeNavHeight;
+    }
+
+    function canMoveToBottom() {
+      return contentNav.outerHeight(true) >= minContentNavHeight;
+    }
+
+    function setCursor(dragging) {
+      if (canMoveToBottom() && canMoveToTop()) {
+        handbar.css("cursor", "row-resize");
+      } else if (canMoveToBottom()) {
+        dragging && sidebar.css("cursor", "s-resize");
+        handbar.css("cursor", "s-resize");
+      } else if (canMoveToTop()) {
+        dragging && sidebar.css("cursor", "n-resize");
+        handbar.css("cursor", "n-resize");
+      }
+    }
+
+    var dragging = 0;
+    var lastY = 0;
+    handbar.on("mousedown", function (e) {
+      dragging = 1;
+      lastY = e.clientY;
+    });
+
+    sidebar.on("mousemove", function (e) {
+      setCursor(dragging);
+      if (!dragging) return;
+      var offsetY = e.clientY - lastY;
+      if ((offsetY > 0 || canMoveToTop()) && (offsetY < 0 || canMoveToBottom())) {
+        readmeNav.css({height: "+=" + offsetY});
+        readmeNavList.css({height: "+=" + offsetY});
+        contentNav.css({height: "-=" + offsetY});
+        contentNavList.css({height: "-=" + offsetY});
+        lastY = e.clientY;
+      }
+    });
+
+    $(document).on("mouseup", function () {
+      dragging = 0;
+      handbar.css("cursor", "auto");
+      sidebar.css("cursor", "auto");
+    });
+
+    $(window).on("resize", resize);
+    resize();
+  });
+</script>
