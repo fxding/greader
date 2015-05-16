@@ -52,7 +52,11 @@ app.controller("NavCtrl", ["$scope", "$rootScope", "$sce", "readmeList", functio
     if (!user || !name) {
       return console.log("Invalid url");
     }
-    readmeList.add({user: user, name: name}).catch(function (err) {
+    $(".download-progress").addClass("active");
+    readmeList.add({user: user, name: name}).then(function () {
+      $(".download-progress").removeClass("active");
+    }).catch(function (err) {
+      $(".download-progress").removeClass("active");
       console.error(JSON.stringify(err));
     });
   };
