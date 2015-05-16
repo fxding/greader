@@ -63,7 +63,10 @@ app.controller("NavCtrl", ["$scope", "$rootScope", "$sce", "readmeList", functio
 }]);
 
 app.config(['$stateProvider', "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
-  $stateProvider.state("page", {
+  $stateProvider.state("home", {
+    url:"",
+    templateUrl: "partials/welcome.html"
+  }).state("page", {
     url: "/readme/:id/:display?url",
     templateUrl: function ($stateParams) {
       var appDataPath = require("remote").require("app").getPath("appData");
@@ -71,7 +74,7 @@ app.config(['$stateProvider', "$urlRouterProvider", function ($stateProvider, $u
     }
   }).state("notfound", {
     url: "/404",
-    templateUrl: "404.html"
+    templateUrl: "partials/404.html"
   });
   $urlRouterProvider.otherwise("/notfound");
 
