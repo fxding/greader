@@ -9,37 +9,6 @@ nav.top-bar {
   background-repeat: repeat-x;
   border-bottom: 1px solid #bbbbbb;
 }
-@-webkit-keyframes download-progress-stripes {
-  from {
-    background-position: 40px 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
-@keyframes download-progress-stripes {
-  from {
-    background-position: 40px 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
-.download-progress {
-  width: 100%;
-  -webkit-transition: width 0.6s ease;
-  -o-transition: width 0.6s ease;
-  transition: width 0.6s ease;
-}
-.download-progress.active {
-  -webkit-animation: dowload-progress-stripes 2s linear infinite;
-  -o-animation: dowload-progress-stripes 2s linear infinite;
-  animation: dowload-progress-stripes 2s linear infinite;
-  background-image: -webkit-linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%, transparent 25%, transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%, transparent 25%, transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%, transparent 75%, transparent);
-  -webkit-background-size: 40px 40px;
-  background-size: 40px 40px;
-}
 div#sidebar {
   position: fixed;
   top: 0;
@@ -130,8 +99,39 @@ div#sidebar .content-nav .content-nav-list .content-nav-list-item a {
 /* Content */
 div#content {
   min-width: 500px;
-  margin: 0 20px 20px 270px;
+  margin: 50px 20px 20px 270px;
 }
 .highlighted {
   background: #ffff00;
+}
+.download-progress {
+  width: 100%;
+  -webkit-transition: width 0.6s ease;
+  -o-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+}
+.download-progress.active {
+  -webkit-animation: download-progress-stripes 2s linear infinite;
+  -o-animation: download-progress-stripes 2s linear infinite;
+  animation: download-progress-stripes 2s linear infinite;
+  background-image: -webkit-linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%, transparent 25%, transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(231, 231, 231, 0.45) 25%, transparent 25%, transparent 50%, rgba(231, 231, 231, 0.45) 50%, rgba(231, 231, 231, 0.45) 75%, transparent 75%, transparent);
+  -webkit-background-size: 40px 40px;
+  background-size: 40px 40px;
+}
+@-webkit-keyframes download-progress-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@keyframes download-progress-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }
