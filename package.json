@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "cd ./app && npm install",
+    "start": "electron ./build"
   },
   "devDependencies": {
     "fs-jetpack": "^0.6.4",
