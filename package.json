@@ -1,5 +1,13 @@
 {
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "fs-jetpack": "^0.6.4",
+    "gulp": "^3.8.11",
+    "gulp-less": "^3.0.3",
+    "gulp-util": "^3.0.4",
+    "q": "^1.4.1",
+    "yargs": "^3.9.0"
   }
 }
