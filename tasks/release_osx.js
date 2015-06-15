@@ -13,7 +13,7 @@ var init = function () {
     projectDir = jetpack;
     releasesDir = projectDir.dir('./releases', { empty: true });
     manifest = projectDir.read('app/package.json', 'json');
-    finalAppDir = releasesDir.cwd(manifest.productName + '.app');
+    finalAppDir = releasesDir.cwd(manifest.name + '.app');
     return Q();
 };
 
@@ -29,7 +29,7 @@ var finalize = function () {
     // Prepare main Info.plist
     var info = projectDir.read('resources/osx/Info.plist');
     info = utils.replace(info, {
-        productName: manifest.productName,
+        productName: manifest.name,
         identifier: manifest.identifier,
         version: manifest.version
     });

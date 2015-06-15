@@ -1,3 +1,5 @@
+"use strict";
+
 var app = angular.module("GithubReadmeReader", ["ui.router"]);
 
 app.controller("TableContentsNavCtrl", ["$scope", "$rootScope", "readmeList", function ($scope, $rootScope, readmeList) {
@@ -45,6 +47,8 @@ app.controller("TableContentsNavCtrl", ["$scope", "$rootScope", "readmeList", fu
 
 app.controller("NavCtrl", ["$scope", "$rootScope", "$sce", "readmeList", function ($scope, $rootScope, $sce, readmeList) {
   $scope.currentRepo = "Welcome";
+  $scope.repoUrl = "";
+  $scope.downloading = false;
   $scope.add = function (repoUrl) {
     var paths = repoUrl.split("/");
     var user = paths[paths.length - 2];
@@ -52,12 +56,18 @@ app.controller("NavCtrl", ["$scope", "$rootScope", "$sce", "readmeList", functio
     if (!user || !name) {
       return console.log("Invalid url");
     }
+    $scope.downloading = true;
     $(".download-progress").addClass("active");
     readmeList.add({user: user, name: name}).then(function () {
+      $scope.downloading = false;
+      $scope.repoUrl = "";
       $(".download-progress").removeClass("active");
+      $scope.digest();
     }).catch(function (err) {
+      $scope.downloading = false;
       $(".download-progress").removeClass("active");
-      console.error(JSON.stringify(err));
+      console.log(err);
+      $scope.digest();
     });
   };
 
@@ -73,7 +83,7 @@ app.config(['$stateProvider', "$urlRouterProvider", function ($stateProvider, $u
   }).state("page", {
     url: "/readme/:id/:display?url",
     templateUrl: function ($stateParams) {
-      var appDataPath = require("remote").require("app").getPath("appData");
+      var appDataPath = require("remote").require("app").getPath("userData");
       return appDataPath + "/" + $stateParams.id + ".html";
     }
   }).state("notfound", {
@@ -101,14 +111,14 @@ app.provider("readmeList", [function () {
     return list;
   }
   var DB = require("./db.js");
-  var db = new DB();
+  var db = new DB(window.env);
   var connect = null;
 
   var initialized = false;
   this.init = function () {
     connect = db.init();
     try {
-      var contents = connect.exec("SELECT * FROM test");
+      var contents = connect.exec("SELECT * FROM " + window.env.tableName);
       if (contents.length > 0) {
         readmeList = convertToObject(contents[0].columns, contents[0].values);
       }
@@ -119,7 +129,7 @@ app.provider("readmeList", [function () {
   };
 
   this.refresh = function () {
-    var contents = connect.exec("SELECT * FROM test");
+    var contents = connect.exec("SELECT * FROM " + window.env.tableName);
     if (contents.length > 0) {
       readmeList = convertToObject(contents[0].columns, contents[0].values);
     }

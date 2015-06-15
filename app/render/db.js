@@ -1,12 +1,13 @@
 "use strict";
 
-function DB(config) {
+var jetpack = require('fs-jetpack');
+
+function DB() {
   var GithubApi = require('github');
   this.github = new GithubApi({version: "3.0.0"});
   this.db = null;
-  this.config = config;
-  this.appDataPath = require("remote").require("app").getPath("appData");
-  this.dbName = "readme.sqlite";
+  this.config = window.env;
+  this.userDataDir = jetpack.cwd(require("remote").require("app").getPath("userData"));
 }
 
 DB.prototype.init = function () {
@@ -17,10 +18,11 @@ DB.prototype.init = function () {
 
   var fs = require("fs");
   var sqlite = require("sql.js");
-  function createOrReadDatabase(path) {
-    var yes = fs.existsSync(path);
+  var self = this;
+  function createOrReadDatabase(dbname) {
+    var yes = fs.existsSync(self.userDataDir.path(dbname));
     if(yes) {
-      var data = fs.readFileSync(path);
+      var data = fs.readFileSync(self.userDataDir.path(dbname));
       if (!data) {
         return ;
       }
@@ -29,17 +31,17 @@ DB.prototype.init = function () {
       try {
         var db = new sqlite.Database();
         // Run a query without reading the results
-        db.run("CREATE TABLE test (full_name, html_url, language, description, owner_html_url);");
-        db.run("create unique index if not exists full_name_idx on test(full_name)");
+        db.run("CREATE TABLE " + self.config.tableName + " (full_name, html_url, language, description, owner_html_url);");
+        db.run("create unique index if not exists full_name_idx on " + self.config.tableName + "(full_name)");
         var buffer = new Buffer(db.export());
-        fs.writeFileSync(path, buffer);
+        self.userDataDir.write(dbname, buffer);
         return db;
       } catch(e) {
         console.log(e);
       }
     }
   }
-  this.db = createOrReadDatabase(this.appDataPath + '/' + this.dbName);
+  this.db = createOrReadDatabase(this.config.dbFileName);
   return this.db;
 };
 
@@ -58,13 +60,7 @@ DB.prototype.add = function (repo) {
         } else {
           var name = repo.user + "_" + repo.name;
           name = name.replace(/\.|\//g, '_');
-          fs.writeFile(self.appDataPath + "/" + name + ".html", page, function (err) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve();
-            }
-          });
+          self.userDataDir.writeAsync(name + ".html", page).then(resolve, reject);
         }
       });
     });
@@ -75,15 +71,10 @@ DB.prototype.add = function (repo) {
           return reject(err);
         }
         try {
-          self.db.run("INSERT INTO test VALUES (?,?,?,?,?)", [data.full_name, data.html_url, data.language, data.description, data.owner.html_url]);
+          self.db.run("INSERT INTO " + self.config.tableName + " VALUES (?,?,?,?,?)", [data.full_name, data.html_url, data.language, data.description, data.owner.html_url]);
           var d = self.db.export();
           var buffer = new Buffer(d);
-          fs.writeFile(self.appDataPath + '/' + self.dbName, buffer, function (err) {
-            if (err) {
-              return reject(err);
-            }
-            resolve();
-          });
+          self.userDataDir.writeAsync(self.config.dbFileName, buffer).then(resolve, reject);
         } catch(e) {
           reject(e);
         }

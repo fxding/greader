@@ -6,11 +6,11 @@
         <a ng-show="currentRepo.url" class="navbar-brand" ng-href="{{currentRepo.url}}">{{ currentRepo.display |
           decodeURL}} <span class="glyphicon glyphicon-share-alt"></span></a>
       </div>
-      <form ng-submit="add(repoUrl)" class="navbar-form navbar-right" role="search" ng-init="repoUrl=null">
+      <form ng-submit="add(repoUrl)" class="navbar-form navbar-right" role="search">
         <div class="input-group">
-          <input type="text" class="form-control" ng-model="repoUrl" placeholder="Repository URL" required>
+          <input type="text" ng-disabled="downloading" class="form-control" ng-model="repoUrl" placeholder="Repository URL" required>
         <span class="input-group-btn">
-          <button type="submit" class="btn btn-default" ng-disabled="!repoUrl">
+          <button type="submit" ng-disabled="downloading" class="btn btn-default" ng-disabled="!repoUrl">
             <span class="glyphicon glyphicon-plus"></span></button>
         </span>
         </div>
