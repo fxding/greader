@@ -62,12 +62,12 @@ app.controller("NavCtrl", ["$scope", "$rootScope", "$sce", "readmeList", functio
       $scope.downloading = false;
       $scope.repoUrl = "";
       $(".download-progress").removeClass("active");
-      $scope.digest();
+      $scope.$digest();
     }).catch(function (err) {
       $scope.downloading = false;
       $(".download-progress").removeClass("active");
       console.log(err);
-      $scope.digest();
+      $scope.$digest();
     });
   };
 
