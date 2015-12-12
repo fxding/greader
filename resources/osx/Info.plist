@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>{{productName}}</string>
 	<key>CFBundleExecutable</key>
-	<string>Electron</string>
+	<string>{{productName}}</string>
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -17,6 +17,8 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
+	<string>{{version}}</string>
+	<key>CFBundleGetInfoString</key>
 	<string>{{version}}</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.8.0</string>

@@ -1,8 +1,9 @@
-var app = require("app");
-var BrowserWindow = require("browser-window");
+var electron = require("electron");
+var app = electron.app;
+var BrowserWindow = electron.BrowserWindow;
 var windowStateKeeper = require('./browser/window_state');
 
-require("crash-reporter").start();
+electron.crashReporter.start();
 
 var mainWindow = null;
 

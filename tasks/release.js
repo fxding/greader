@@ -5,12 +5,8 @@ var utils = require('./utils');
 
 var releaseForOs = {
     osx: require('./release_osx'),
-    linux: function () {
-      console.log("Not support yet");
-    },
-    windows: function () {
-      console.log("Not support yet");
-    }
+    linux: require('./release_linux'),
+    windows: require('./release_windows'),
 };
 
 gulp.task('release', ['build'], function () {
