@@ -1,4 +1,3 @@
-util.print: Use console.log instead
 body {
   padding-top: 50px;
 }
@@ -8,6 +7,9 @@ nav.top-bar {
   background-image: linear-gradient(to bottom, #fafafa, #f0f0f0);
   background-repeat: repeat-x;
   border-bottom: 1px solid #bbbbbb;
+}
+nav.top-bar .add-form .input-group input {
+  width: 300px;
 }
 div#sidebar {
   position: fixed;
