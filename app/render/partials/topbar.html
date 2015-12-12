@@ -3,10 +3,10 @@
     <div class="container download-progress">
       <div class="navbar-header">
         <a ng-show="!currentRepo.url" ng-disabled="!currentRepo.url" class="navbar-brand">Welcome</a>
-        <a ng-show="currentRepo.url" class="navbar-brand" ng-href="{{currentRepo.url}}">{{ currentRepo.display |
+        <a ng-show="currentRepo.url" class="navbar-brand" ng-href="{{currentRepo.url| decodeURL}}" title="open in browser">{{ currentRepo.display |
           decodeURL}} <span class="glyphicon glyphicon-share-alt"></span></a>
       </div>
-      <form ng-submit="add(repoUrl)" class="navbar-form navbar-right" role="search">
+      <form ng-submit="add(repoUrl)" class="navbar-form navbar-right add-form" role="add">
         <div class="input-group">
           <input type="text" ng-disabled="downloading" class="form-control" ng-model="repoUrl" placeholder="Repository URL" required>
         <span class="input-group-btn">
