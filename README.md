@@ -3,27 +3,19 @@ All the Readme file will be downloaded on your local, you can read it at any whe
 
 ## Usage
 
-You need to install [Atom/Electron](https://github.com/atom/electron) first, then run it as Electron app.
-
 ```
-npm install   // install dependencies
-
-gulp build
-gulp release   // package app, will create app in release directory.
-
-npm start      // after you build it
+npm install     // install dependencies
+npm start       // start for dev
+npm run release // create app
 ```
+Add readme documentation of repositories you love on the top navigator.
 
-Add the repo readme documentation on the top.
-
+Learn more about build on [electron-boilerplate](https://github.com/szwacz/electron-boilerplate).
 ## ScreenShot
 ![img](./doc/screenshot.png)
 
 
 ## TODO
-- ~~Add gulp tasks~~
-- ~~Add state indicator~~
-- ~~Add content navigator~~
 - Delete readme file
 - Welcome page
 - Content search
